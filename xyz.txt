@@ -1,0 +1,33 @@
+
+----------------------------Left and Right Condition------------------------
+
+  Extreme Left           Left                 Normal                  Right               Extreme Right
+     >30             Lx.Eye>Lx.Ear                                Rx.Eye>Rx.Ear              >30
+
+>50  >30    >20   >10     0   <5  <10   <15           <15    <10   <5    0    >10    >20     >30   >50
+
+0.1   0.3   0.4   0.5    0.6  0.7  0.8   0.9     1     0.9   0.8   0.7   0.6   0.5    0.4    0.3    0.1
+        10% Change --- 0.1                                              
+
+
+-----------------------------Up and Down Condition---------------------------
+
+          Extreme Up               Up                      Normal            Down             Exteme Down
+             >35             Ear.y - Eye.y >25                            Ear.y - Eye.y          >40
+
+ >45   >40   >35   >30    >25   >20   >15   >10    >5                     0    >10   >20   >30   >40  >50
+ 0.1   0.2   0.3   0.4   0.5   0.6   0.7   0.8    0.9        1           0.9   0.75  0.6   0.55  0.4  0.25
+        5% change -- 0.1                                                10% change ---- 0.15
+
+
+Information we can get
+
+If All Extreme Down or 70% > - Probably Students writing notes
+Proctering - Looking Left or Right ------Most probably Looking into another device for answer
+
+Who you want Data ?
+1. Every x number of Second
+
+2. For every extreme cases
+
+3. Reatime 
