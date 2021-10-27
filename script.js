@@ -77,29 +77,81 @@ const detectFaces = async () => {
               landmarks[1][1] - landmarks[5][1] > 35
             ) {
               Status.push("Extreme Down");
-            } else {
+              State.Vertical_score = 0.8 - ((((landmarks[0][1] - landmarks[4][1])/100)+((landmarks[1][1] - landmarks[5][1])/100))/2)
+
+            } else if (
+              landmarks[0][1] - landmarks[4][1] > 0 ||
+              landmarks[1][1] - landmarks[5][1] > 0
+            ) {
               Status.push("Down");
+            State.Vertical_score = 0.8 - ((((landmarks[0][1] - landmarks[4][1])/100)+((landmarks[1][1] - landmarks[5][1])/100))/2)
+
+            }
+            else if ( (
+              landmarks[0][1] - landmarks[4][1] < 0 ||
+              landmarks[1][1] - landmarks[5][1] < 0
+            ) && (
+              landmarks[0][1] - landmarks[4][1] >-13 ||
+              landmarks[1][1] - landmarks[5][1] >-13 
+            )){
+              Status.push("Towards Down");
+              State.Vertical_score = 0.9 - ((((landmarks[0][1] - landmarks[4][1])/100)+((landmarks[1][1] - landmarks[5][1])/100))/2)
+
             }
 
+            // console.log((landmarks[0][0] - landmarks[4][0] ))
+            // State.Vertical_score = 0.8 - ((((landmarks[0][1] - landmarks[4][1])/100)+((landmarks[1][1] - landmarks[5][1])/100))/2)
           // Down-Right
           if (landmarks[4][0] < landmarks[0][0]) {
             if (!State.p_state.includes(Status))
               if (landmarks[0][0] - landmarks[4][0] > 30) {
                 Status.push("Extreme Right");
-              } else {
+
+              } 
+              else if (landmarks[0][0] - landmarks[4][0] > 0) {
                 Status.push("Right");
+                State.Horizontal_score = 0.6 - ((landmarks[0][0] - landmarks[4][0])/100)
+                
               }
-          }
+            }
+            else if ((landmarks[0][0] - landmarks[4][0] < -30) && (landmarks[0][0] - landmarks[4][0] >-40))
+            {
+              
+              State.Horizontal_score = 1 - ((landmarks[0][0] - landmarks[4][0])/100 +0.4)
+             
+            }
+          else if ((landmarks[0][0] - landmarks[4][0] < 0) && (landmarks[0][0] - landmarks[4][0] >-30))
+            {
+              
+              State.Horizontal_score = 0.9 - ((landmarks[0][0] - landmarks[4][0])/100 +0.3)
+              Status.push("Towards Right")
+            }
+          
 
           // Down-Left
           else if (landmarks[1][0] < landmarks[5][0]) {
             if (!State.p_state.includes(Status))
               if (landmarks[5][0] - landmarks[1][0] > 30) {
                 Status.push("Extreme Left");
-              } else {
+              } else if (landmarks[5][0] - landmarks[1][0] > 0) {
                 Status.push("Left");
+                State.Horizontal_score = 0.6 - ((landmarks[5][0] - landmarks[1][0])/100 )
               }
+            }
+
+            else if  ((landmarks[5][0] - landmarks[1][0] < -30) &&  (landmarks[5][0] - landmarks[1][0] >-40) )
+            {
+             
+              
+              State.Horizontal_score = 1 - ((landmarks[5][0] - landmarks[1][0])/100 +0.4)
+            }
+          else if  ((landmarks[5][0] - landmarks[1][0] < 0) &&  (landmarks[5][0] - landmarks[1][0] >-30) )
+          {
+            Status.push("Towards Left")
+            
+            State.Horizontal_score = 0.9 - ((landmarks[5][0] - landmarks[1][0])/100 +0.3)
           }
+          
         }
         // Up
         else if (
@@ -108,39 +160,88 @@ const detectFaces = async () => {
         ) {
           if (!State.p_state.includes(Status))
             if (
-              landmarks[4][1] - landmarks[0][1] > 45 ||
-              landmarks[5][1] - landmarks[1][1] > 45
+              landmarks[4][1] - landmarks[0][1] > 35 ||
+              landmarks[5][1] - landmarks[1][1] > 35
             ) {
               Status.push("Extreme Up");
+              State.Vertical_score = 1 - ((((landmarks[4][1] - landmarks[0][1])/100)+((landmarks[5][1] - landmarks[1][1])/100))/2)
+
             } else if (
-              landmarks[4][1] - landmarks[0][1] > 30 ||
-              landmarks[5][1] - landmarks[1][1] > 30
+              landmarks[4][1] - landmarks[0][1] > 25 ||
+              landmarks[5][1] - landmarks[1][1] > 25
             ) {
               Status.push("Up");
-            } else {
+              State.Vertical_score = 1 - ((((landmarks[4][1] - landmarks[0][1])/100)+((landmarks[5][1] - landmarks[1][1])/100))/2)
+
+            } 
+            else if ((
+              landmarks[4][1] - landmarks[0][1] > 13 ||
+              landmarks[5][1] - landmarks[1][1] > 13
+            ) && (
+              landmarks[4][1] - landmarks[0][1] < 25 ||
+              landmarks[5][1] - landmarks[1][1] < 25
+            )) {
               Status.push("Normal");
-            }
+              State.Vertical_score = 1.1 - ((((landmarks[4][1] - landmarks[0][1])/100)+((landmarks[5][1] - landmarks[1][1])/100))/2)
+
+            } 
+          
+            // console.log((landmarks[0][0] - landmarks[4][0]))
+            // State.Vertical_score = 1 - ((((landmarks[4][1] - landmarks[0][1])/100)+((landmarks[5][1] - landmarks[1][1])/100))/1.4)
 
           // Up-Right
           if (landmarks[4][0] < landmarks[0][0]) {
             if (!State.p_state.includes(Status))
               if (landmarks[0][0] - landmarks[4][0] > 30) {
                 Status.push("Extreme Right");
-              } else {
+              } else if (landmarks[0][0] - landmarks[4][0] > 0){
                 Status.push("Right");
+                State.Horizontal_score = 0.6 - ((landmarks[0][0] - landmarks[4][0])/100)
               }
-          }
+            }
+
+          else if ((landmarks[0][0] - landmarks[4][0] < -30) && (landmarks[0][0] - landmarks[4][0] >-40))
+              {
+                
+                State.Horizontal_score = 1 - ((landmarks[0][0] - landmarks[4][0])/100 +0.4)
+               
+              }
+          else if ((landmarks[0][0] - landmarks[4][0] < 0) && (landmarks[0][0] - landmarks[4][0] >-30))
+              {
+                
+                State.Horizontal_score = 0.9 - ((landmarks[0][0] - landmarks[4][0])/100 +0.3)
+                Status.push("Towards Right")
+              }
+          
 
           // Up-Left
           else if (landmarks[1][0] < landmarks[5][0]) {
             if (!State.p_state.includes(Status))
               if (landmarks[5][0] - landmarks[1][0] > 30) {
                 Status.push("Extreme Left");
-              } else {
+              } else if (landmarks[5][0] - landmarks[1][0] > 0){
                 Status.push("Left");
+                State.Horizontal_score = 0.6 - ((landmarks[5][0] - landmarks[1][0])/100 )
               }
-          }
+            }
+
+            else if  ((landmarks[5][0] - landmarks[1][0] < -30) &&  (landmarks[5][0] - landmarks[1][0] >-40) )
+              {
+               
+                
+                State.Horizontal_score = 1 - ((landmarks[5][0] - landmarks[1][0])/100 +0.4)
+              }
+            else if  ((landmarks[5][0] - landmarks[1][0] < 0) &&  (landmarks[5][0] - landmarks[1][0] >-30) )
+            {
+              Status.push("Towards Left")
+              
+              State.Horizontal_score = 0.9 - ((landmarks[5][0] - landmarks[1][0])/100 +0.3)
+            }
+            
+          
         }
+        document.getElementById('hscore').innerText = State.Horizontal_score
+        document.getElementById('vscore').innerText = State.Vertical_score
 
         if (Status.length != 0) {
           //If there is a change in position
